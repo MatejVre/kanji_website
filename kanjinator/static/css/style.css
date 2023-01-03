@@ -1,14 +1,14 @@
 /* Navbar container */
 .navbar {
     overflow: hidden;
-    background-color: #333;
+    background-color: black;
     font-family: Arial;
   }
   
   /* Links inside the navbar */
   .navbar a {
     float: left;
-    font-size: 2.2em;
+    font-size: 2.2vw;
     color: white;
     text-align: center;
     padding: 0.5em 0.75em;
@@ -73,12 +73,12 @@
     aspect-ratio: 1/1;
     text-align: center;
     float:left;
-    font-size: 5em;
+    font-size: 7vw;
     box-sizing: border-box;
     width: 16%;
     margin: 2%;
     position: relative;
-    border-radius: 0.15em;
+    border-radius: 0.4vw;
     font-family: 'Montserrat', 'Mplus 1p', 'Hiragino Sans', 'Hiragino Kaku Gothic Pro', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic', 'ＭＳ ゴシック' , 'MS Gothic', sans-serif;
   }
 
@@ -99,4 +99,9 @@
     color: red !important;
     text-align: center;
     font-size: "1em";
+}
+
+h1{
+  font-size: 6em;
+  font-family: "IPAexGothic, IPAexMincho";
 }
