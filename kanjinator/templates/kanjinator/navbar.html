@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>My test page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    
+    <div class="navbar">
+        <a href="/">Kanji</a>
+        {% for i in '54321'|make_list %} <! -- https://stackoverflow.com/questions/1107737/numeric-for-loop-in-django-templates-->
+        <div class="dropdown">
+            <button class="dropbtn">JLPT N{{forloop.counter}}
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="/JLPT{{forloop.counter}}">Kanji</a>
+                <a href="">Practice</a>
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% block content %}
+    {% endblock content %}
+    {% for char in chars %}
+    <div class="display_kanji"><b><a href="{% url 'kanji' char.symbol %}" title="{{char.meaning}}"><p >{{char.symbol}}</p></a></b></div>
+    {% endfor %}
+  </body>
+</html>

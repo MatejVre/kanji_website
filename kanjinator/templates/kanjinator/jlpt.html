@@ -1,0 +1,7 @@
+{% extends 'kanjinator/navbar.html' %}    #https://stackoverflow.com/questions/71242630/how-to-add-a-simple-navbar-to-all-my-pages
+
+{% block content %}
+{% for char in chars %}
+<div class="display_kanji"><b><a href="{% url 'kanji' char.symbol %}" title="{{char.meaning}}"><p >{{char.symbol}}</p></a></b></div>
+{% endfor %}
+{% endblock content %}
