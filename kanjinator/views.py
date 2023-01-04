@@ -1,14 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import random
-import requests
+from django import forms
 from .models import Kanji
+
 
 KANJI_APP_TOKEN = "https://kanjialive-api.p.rapidapi.com/api/public/kanji/"
 # Create your views here.
 def index(request):
-    
-      
     return render(request, 'kanjinator/index.html')
 
 def kanji(request, character):
@@ -24,6 +22,10 @@ def test(request):
 
 def jlpt(request, level):
     list = Kanji.objects.filter(JLPT__exact=level)
-    characters = list
-      
-    return render(request, 'kanjinator/jlpt.html', {'chars':characters})
+    return render(request, 'kanjinator/jlpt.html', {'chars':list})
+
+def result(request):
+    query = request.POST['search']
+    kanji =  Kanji.objects.filter(symbol__exact=query)
+ 
+    return render(request, 'kanjinator/jlpt.html', {'chars':kanji})

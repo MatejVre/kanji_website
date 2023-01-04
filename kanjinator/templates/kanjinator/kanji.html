@@ -1,14 +1,16 @@
 {% extends 'kanjinator/navbar.html' %}
 {% block content%}
-<h1>{{kanji.symbol}}</h1>
-<p>Meaning: {{kanji.meaning}}</p>
-<p>JLPT: N{{kanji.JLPT}}</p>
-<p>Grade: {{kanji.grade}}</p>
-<p>Radical name: {{kanji.radical}}</p>
-<p>Number of strokes: {{kanji.strokes}}</p>
-<p>Kanji Classification: {{kanji.kanji_classification}}</p>
-<p>Readings: {{kanji.joyo_reading}}</p>
-<p></p>
+<div class="container text-center p-5">
+    <h1 class="display-1">{{kanji.symbol}}</h1>
+    <p class="blockquote">Meaning: {{kanji.meaning}}</p>
+    <p class="blockquote">JLPT: N{{kanji.JLPT}}</p>
+    <p class="blockquote">Grade: {{kanji.grade}}</p>
+    <p class="blockquote">Radical name: {{kanji.radical}}</p>
+    <p class="blockquote">Number of strokes: {{kanji.strokes}}</p>
+    <p class="blockquote">Kanji Classification: {{kanji.kanji_classification}}</p>
+    <p class="blockquote">Readings: {{kanji.joyo_reading}}</p>
+</div>
+
 {% endblock content%}
     
     
