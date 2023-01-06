@@ -42,17 +42,30 @@
           {% endfor %}
             <form class="form-inline my-2" action="{% url 'result'  %}" method="post">{% csrf_token %}
               <select name="option" id="option" class="form-control">
-                <option class="form-control" value="symbol">Kanji:</option>
-                <option class="form-control" value="reading">Reading:</option>
-                <option class="form-control" value="grade">Grade:</option>
+                <option class="form-control" value="symbol" {% if option == "symbol" %} selected {% endif %}>Kanji:</option>
+                <option class="form-control" value="reading" {% if option == "reading" %} selected {% endif %}>Reading:</option>
+                <option class="form-control" value="grade" {% if option == "grade" %} selected {% endif %}>Grade:</option>
               </select>
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="{{query}}">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
           </ul>
       </div>
     </nav>
-    {% block content %}
-    {% endblock content %}
+    {% if not chars%}
+    <h1 class="h1 text-center">No results found</h1>
+    {% endif %}
+    <div class="container-fluid">
+    {% for char in chars %}
+        {% if forloop.first %}<div class="row">{% endif %}
+        <div class="col-lg-3 display-1">
+            <div class="p-5 border m-2 rounded">
+                <a href="{% url 'kanji' char.symbol %}" title="{{char.meaning}}"><p id="{{char.id}}" >{{char.symbol}}</p></a>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+        {% if forloop.last %}</div>{% endif %}
+    {% endfor %}
+    </div>
   </body>
 </html>

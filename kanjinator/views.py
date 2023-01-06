@@ -26,6 +26,13 @@ def jlpt(request, level):
 
 def result(request):
     query = request.POST['search']
-    kanji =  Kanji.objects.filter(symbol__exact=query)
- 
-    return render(request, 'kanjinator/jlpt.html', {'chars':kanji})
+    option = request.POST['option']
+    if option == "reading" and len(query.strip()) != 0:
+        kanji = Kanji.objects.filter(joyo_reading__contains= query.strip())
+    elif option == "symbol" and len(query.strip()) != 0:
+        kanji = Kanji.objects.filter(symbol__exact=query)
+    elif option == "grade":
+        kanji = Kanji.objects.filter(grade__exact=query)
+    else:
+        kanji = Kanji.objects.none
+    return render(request, 'kanjinator/search.html', {'chars':kanji, 'option':option, 'query':query})
