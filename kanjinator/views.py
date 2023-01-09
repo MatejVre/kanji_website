@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django import forms
 from .models import Kanji
+import random
 
 
 KANJI_APP_TOKEN = "https://kanjialive-api.p.rapidapi.com/api/public/kanji/"
@@ -36,3 +37,8 @@ def result(request):
     else:
         kanji = Kanji.objects.none
     return render(request, 'kanjinator/search.html', {'chars':kanji, 'option':option, 'query':query})
+
+def practice(request, level):
+    list = Kanji.objects.filter(JLPT__exact=level)
+    index = random.randint(0, len(list)-1)
+    return render(request, 'kanjinator/practice.html', {'kanji':list[index]})

@@ -1,0 +1,59 @@
+{% extends 'kanjinator/navbar.html' %}
+{% block content%}
+
+<div class="container text-center p-5">
+    <div class="row justify-content-md-center my-5">
+        <div class="col">
+            <h1 class="display-1">{{kanji.symbol}}</h1>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col d-flex justify-content-center">
+            <div class="form-group">
+                <input type="text" class="form-text my-2" id="input">
+                <button type="submit" class="btn btn-primary my-4" onclick="check()" id="myBtn">Submit</button>
+            </div>
+        </div>
+    </div> 
+    <div class="row justify-content-md-cente">
+        <div class="col d-flex justify-content-center">
+            <span id="result"></span>
+        </div>
+    </div>   
+    <div class="row justify-content-md-cente">
+        <div class="col d-flex justify-content-center">
+            <span id="answers" style="visibility:hidden" class="h3 blockquote">{{kanji.meaning}}</span>
+        </div>
+    </div>
+</div>
+<script>
+    let input = document.getElementById("input");
+    input.focus();
+    // Execute a function when the user presses a key on the keyboard
+    input.addEventListener("keypress", function(event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("myBtn").click();
+    }
+    });
+    function check(){
+        let meanings = "{{kanji.meaning}}"
+        let result = document.getElementById("result");
+        let input = document.getElementById("input").value;
+        let answers = document.getElementById("answers")
+        console.log("a");
+        if(meanings.includes(input) && input.length != 0){
+            console.log("b");
+            result.innerHTML = "CORRECT";
+            result.classList.add("text-success");
+            result.classList.add("blockquote");
+            result.classList.add("h3");
+            answers.style.visibility = "visible";    
+        }
+        return true;
+    }
+</script>
+{% endblock content%}
