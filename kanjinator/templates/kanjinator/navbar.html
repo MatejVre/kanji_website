@@ -40,7 +40,7 @@
             </div>
           </li>
           {% endfor %}
-            <form class="form-inline my-2" action="{% url 'result'  %}" method="post">{% csrf_token %}
+            <form class="form-inline my-2" action="{% url 'result'  %}" method="get">{% csrf_token %}
               <select name="option" id="option" class="form-control">
                 <option class="form-control" value="symbol">Kanji:</option>
                 <option class="form-control" value="reading">Reading:</option>

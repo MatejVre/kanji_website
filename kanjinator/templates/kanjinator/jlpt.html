@@ -9,7 +9,7 @@
     {% if forloop.first %}<div class="row">{% endif %}
     <div class="col-lg-3 display-1">
         <div class="p-5 border m-2 rounded">
-            <a href="{% url 'kanji' char.symbol %}" title="{{char.meaning}}"><p id="{{char.id}}" >{{char.symbol}}</p></a>
+            <a href="{% url 'kanji' char.kanji %}" title="{{char.meanings}}"><p id="{{char.id}}" >{{char.kanji}}</p></a>
         </div>
     </div>
     {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}

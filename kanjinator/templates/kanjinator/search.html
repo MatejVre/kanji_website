@@ -39,9 +39,9 @@
             </div>
           </li>
           {% endfor %}
-            <form class="form-inline my-2" action="{% url 'result'  %}" method="post">{% csrf_token %}
+            <form class="form-inline my-2" action="{% url 'result'  %}" method="get">{% csrf_token %}
               <select name="option" id="option" class="form-control">
-                <option class="form-control" value="symbol" {% if option == "symbol" %} selected {% endif %}>Kanji:</option>
+                <option class="form-control" value="kanji" {% if option == "kanji" %} selected {% endif %}>Kanji:</option>
                 <option class="form-control" value="reading" {% if option == "reading" %} selected {% endif %}>Reading:</option>
                 <option class="form-control" value="grade" {% if option == "grade" %} selected {% endif %}>Grade:</option>
               </select>
@@ -59,7 +59,7 @@
         {% if forloop.first %}<div class="row">{% endif %}
         <div class="col-lg-3 display-1">
             <div class="p-5 border m-2 rounded">
-                <a href="{% url 'kanji' char.symbol %}" title="{{char.meaning}}"><p id="{{char.id}}" >{{char.symbol}}</p></a>
+                <a href="{% url 'kanji' char.kanji %}" title="{{char.meaning}}"><p id="{{char.id}}" >{{char.kanji}}</p></a>
             </div>
         </div>
         {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
