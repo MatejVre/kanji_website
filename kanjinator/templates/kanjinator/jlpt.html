@@ -8,7 +8,7 @@
 {% for char in chars %}
     {% if forloop.first %}<div class="row">{% endif %}
     <div class="col-lg-3 display-1">
-        <div class="p-5 border m-2 rounded">
+        <div class="p-5 border mx-5 my-4 rounded">
             <a href="{% url 'kanji' char.kanji %}" title="{{char.meanings}}"><p id="{{char.id}}" >{{char.kanji}}</p></a>
         </div>
     </div>
@@ -16,4 +16,7 @@
     {% if forloop.last %}</div>{% endif %}
 {% endfor %}
 </div>
+<footer class="text-center text-lg-start text-white p-1" style="background-color: #311b6b">
+    <p class="align-center p-1">Author: Matej Vrecar</p>
+</footer>
 {% endblock content %}

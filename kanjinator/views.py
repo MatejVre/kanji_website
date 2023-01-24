@@ -4,11 +4,13 @@ from django import forms
 from .models import Kanji
 import random
 from django.db.models import Q
+from django import template
 
 
 KANJI_APP_TOKEN = "https://kanjialive-api.p.rapidapi.com/api/public/kanji/"
 # Create your views here.
 def index(request):
+    
     return render(request, 'kanjinator/index.html')
 
 def kanji(request, character):
@@ -43,3 +45,10 @@ def practice(request, level):
     list = Kanji.objects.filter(JLPT__exact=level)
     index = random.randint(0, len(list)-1)
     return render(request, 'kanjinator/practice.html', {'kanji':list[index]})
+
+@register.filter
+def next(list, current_index):
+    try:
+        return list[current_index +1]
+    except:
+        return False;
