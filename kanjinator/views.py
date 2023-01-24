@@ -15,7 +15,16 @@ def index(request):
 
 def kanji(request, character):
     char = Kanji.objects.get(kanji=character)
-    return render(request, 'kanjinator/kanji.html', {'kanji':char})
+    p = list(Kanji.objects.filter(JLPT__exact=(char.JLPT)))
+    index = p.index(char)
+    previous = index - 1
+    next = index + 1
+    if previous < 0:
+        return render(request, 'kanjinator/kanji.html', {'kanji':char, 'next':p[next]})
+    elif next == len(p):
+        return render(request, 'kanjinator/kanji.html', {'kanji':char, 'previous':p[previous]})
+    else :
+        return render(request, 'kanjinator/kanji.html', {'kanji':char, 'previous':p[previous], 'next':p[next]})
 
 def test(request):
     list = Kanji.objects.filter(JLPT__exact=5)
@@ -46,9 +55,3 @@ def practice(request, level):
     index = random.randint(0, len(list)-1)
     return render(request, 'kanjinator/practice.html', {'kanji':list[index]})
 
-@register.filter
-def next(list, current_index):
-    try:
-        return list[current_index +1]
-    except:
-        return False;

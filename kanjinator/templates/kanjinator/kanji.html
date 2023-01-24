@@ -1,17 +1,36 @@
 {% extends 'kanjinator/navbar.html' %}
 {% block content%}
-<div class="container text-center p-5">
-    <h1 class="display-1">{{kanji.kanji}}</h1>
-    <p class="blockquote">Meaning: {{kanji.meanings}}</p>
-    <p class="blockquote">JLPT: N{{kanji.JLPT}}</p>
-    <p class="blockquote">Grade: {{kanji.grade}}</p>
-    <p class="blockquote">Number of strokes: {{kanji.strokes}}</p>
-    <p class="blockquote">Kanji Classification: {{kanji.kanji_classification}}</p>
-    <p class="blockquote">Kun Readings: {{kanji.kun_readings}}</p>
-    <p class="blockquote">On Readings: {{kanji.on_readings}}</p>
-    <p class="blockquote">Name Readings: {{kanji.name_readings}}</p>
+<div class="container-fluid py-5">
+    <div class="row">
+        
+        <div class="col-lg-10 text-center">
+            <h1 class="display-1">{{kanji.kanji}}</h1>
+            <p class="blockquote">Meaning: {{kanji.meanings}}</p>
+            <p class="blockquote">JLPT: N{{kanji.JLPT}}</p>
+            <p class="blockquote">Grade: {{kanji.grade}}</p>
+            <p class="blockquote">Number of strokes: {{kanji.strokes}}</p>
+            <p class="blockquote">Kanji Classification: {{kanji.kanji_classification}}</p>
+            <p class="blockquote">Kun Readings: {{kanji.kun_readings}}</p>
+            <p class="blockquote">On Readings: {{kanji.on_readings}}</p>
+            <p class="blockquote">Name Readings: {{kanji.name_readings}}</p>
+        </div>
+        <div class="col-lg-1 col-6 d-flex flex-column justify-content-end justify-content-lg-center align-items-start order-lg-first">
+            {% if previous %}
+                <a href="{% url 'kanji' previous.kanji %}"><button class="btn py-lg-5 text-center">🡸</button></a>
+            {% endif %}
+        </div>
+        <div class="col-lg-1 col-6 d-flex flex-column justify-content-end justify-content-lg-center align-items-end">
+            {% if next %}
+            <a href="{% url 'kanji' next.kanji %}"><button class="btn py-lg-5 text-center">🡺</button></a>
+            {% endif %}
+        </div>
+    </div> 
 </div>
 
 {% endblock content%}
     
     
+<div id="leftButton">
+    <a href="{% url 'kanji' previous.kanji %}" title="{{previous.meanings}}" id="previous"><p id="{{previous.id}}" ><</p></a>
+</div>
+<a href="{% url 'kanji' next.kanji %}" title="{{next.meanings}}"><p id="{{next.id}}" >></p></a>
