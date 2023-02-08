@@ -1,7 +1,7 @@
 {% extends 'kanjinator/navbar.html' %}
 {% block content%}
-<!--linear-gradient(to right, #aaabbc,#715aff, #aaabbc)-->
-<div id="myCarousel" class="carousel slide p-4" data-ride="carousel" style="background-image: url('../../static/files/324695593_1586400158541557_341400256946933191_n.png');">
+<!--url('../../static/files/324695593_1586400158541557_341400256946933191_n.png')-->
+<div id="myCarousel" class="carousel slide p-4" data-ride="carousel" style="background-image: linear-gradient(to right, #C33764,#1D2671,#C33764);">
     <div class="carousel-inner text-center text-white">
         <div class="carousel-item active">
             <h3 class="d-block w-100">間</h3>
@@ -26,12 +26,20 @@
         </div>
     </div>
 </div>
-<div class="container-fluid text-center">
-    <h1 class="display-2">ABOUT</h1>
+<div class="container text-center">
+    <h1 class="display-3">ABOUT</h1>
+    <p>The page let's you browse all of the JLPT kanji based on the level.
+        If you wish to learn more about the JLPT, you can read about it on the <a href="https://www.jlpt.jp/e/" target="_blank">official website</a>.</p>
+    <p>Currently limited to JLPT kanji only -> other jouyou kanji to be added in the future.</p>
+    <h2 class="display-4">SEARCH</h2>
+    <p>The site allows search in three different ways:</p>
+    <p><b>Kanji</b>: Searches based on the inputted kanji. To search for multiple kanji, simply write them all in the search box, no spaces or commas necessary.</p>
+    <p><b>Reading</b>: Searched based on the inputted reading. It is important to note,
+         that the results differ based on whether the input is in hiragana or katakana.
+         <br>If searching for a kunyomi, use hiragana and if searching for onyomi, use katakana.
+         <br>For example searching for こころ will return 心 in the result, where as ココロ will not.</p>
+    <p><b>Grade</b>: Searches based on the inputted grade level. Supports number from 1 - 7.</p>
 </div>
-<footer class="text-center text-lg-start text-white p-1" style="background-color: #311b6b">
-    <p class="align-center p-1">Author: Matej Vrecar</p>
-  </footer>
 <script>
     $('.carousel').carousel({
     interval: 3000
