@@ -1,7 +1,22 @@
 {% extends 'kanjinator/navbar.html' %}    #https://stackoverflow.com/questions/71242630/how-to-add-a-simple-navbar-to-all-my-pages
 
 {% block content %}
+{% if not chars%}
+<h1 class="h1 text-center">No results found</h1>
+{% endif %}
+<div class="container-fluid">
 {% for char in chars %}
-<div class="display_kanji"><b><a href="{% url 'kanji' char.symbol %}" title="{{char.meaning}}"><p >{{char.symbol}}</p></a></b></div>
+    {% if forloop.first %}<div class="row">{% endif %}
+    <div class="col-lg-3 display-1">
+        <div class="p-5 border mx-5 my-4 rounded">
+            <a href="{% url 'kanji' char.kanji %}" title="{{char.meanings}}"><p id="{{char.id}}" >{{char.kanji}}</p></a>
+        </div>
+    </div>
+    {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %}
 {% endfor %}
+</div>
+<footer class="text-center text-lg-start text-white p-1" style="background-color: #311b6b">
+    <p class="align-center p-1">Author: Matej Vrecar</p>
+</footer>
 {% endblock content %}

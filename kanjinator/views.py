@@ -1,29 +1,57 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import random
-import requests
+from django import forms
 from .models import Kanji
+import random
+from django.db.models import Q
+from django import template
+
 
 KANJI_APP_TOKEN = "https://kanjialive-api.p.rapidapi.com/api/public/kanji/"
 # Create your views here.
 def index(request):
     
-      
     return render(request, 'kanjinator/index.html')
 
 def kanji(request, character):
-    char = Kanji.objects.get(symbol=character)
-    return render(request, 'kanjinator/kanji.html', {'kanji':char})
+    char = Kanji.objects.get(kanji=character)
+    p = list(Kanji.objects.filter(JLPT__exact=(char.JLPT)))
+    index = p.index(char)
+    previous = index - 1
+    next = index + 1
+    if previous < 0:
+        return render(request, 'kanjinator/kanji.html', {'kanji':char, 'next':p[next]})
+    elif next == len(p):
+        return render(request, 'kanjinator/kanji.html', {'kanji':char, 'previous':p[previous]})
+    else :
+        return render(request, 'kanjinator/kanji.html', {'kanji':char, 'previous':p[previous], 'next':p[next]})
 
 def test(request):
     list = Kanji.objects.filter(JLPT__exact=5)
     list2 = []
     for i in list:
         list2.append(i)
-    return HttpResponse(list2[6].symbol)
+    return HttpResponse(list2[6].kanji)
 
 def jlpt(request, level):
     list = Kanji.objects.filter(JLPT__exact=level)
-    characters = list
-      
-    return render(request, 'kanjinator/jlpt.html', {'chars':characters})
+    return render(request, 'kanjinator/jlpt.html', {'chars':list})
+
+def result(request):
+    query = request.GET['search']
+    option = request.GET['option']
+    if option == "reading" and len(query.strip()) != 0:
+        kanji = Kanji.objects.filter(Q(kun_readings__contains=query.strip()) | Q(on_readings__contains= query.strip()))
+    elif option == "kanji" and len(query.strip()) != 0:
+        kanji = Kanji.objects.filter(kanji__in=list(query))
+    elif option == "grade":
+        kanji = Kanji.objects.filter(grade__exact=query)
+    else:
+        kanji = Kanji.objects.none
+    return render(request, 'kanjinator/search.html', {'chars':kanji, 'option':option, 'query':query})
+
+def practice(request, level):
+    list = Kanji.objects.filter(JLPT__exact=level)
+    index = random.randint(0, len(list)-1)
+    return render(request, 'kanjinator/practice.html', {'kanji':list[index]})
+

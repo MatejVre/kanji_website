@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import sqlite3
 from sqlite3 import Error
+import requests
 # Passing the path of the
 # xml document to enable the
 # parsing process
@@ -24,6 +25,11 @@ except Error as e:
 for i in range(1,2137):
     id = root[i][0].text
     symbol = root[i][1].text
+    response = requests.get("https://kanjiapi.dev/v1/kanji/%s" % symbol)
+    meanings = ", ".join(response.json().get("meanings"))
+    kun_readings = ", ".join(response.json().get("kun_readings"))
+    on_readings = ", ".join(response.json().get("on_readings"))
+    name_readings = ", ".join(response.json().get("name_readings"))
     strokes = root[i][2].text
     grade = root[i][3].text
     kanji_classification = root[i][4].text
@@ -31,10 +37,10 @@ for i in range(1,2137):
     radical = root[i][6].text
     joyo_reading = root[i][8].text
     non_joyo_reading = root[i][9].text
-    meaning = root[i][14].text
-    on_within_joyo = root[i][11].text
-    kun_within_joyo = root[i][17].text
-    sql = "INSERT INTO kanjinator_kanji(id,symbol,strokes,grade,kanji_classification,JLPT,radical,joyo_reading,non_joyo_reading,meaning,on_within_joyo,kun_within_joyo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+
+    on_within_joyo = root[1][11].text
+    kun_within_joyo = root[1][17].text
+    sql = "INSERT INTO kanjinator_kanji(id,kanji,grade,strokes,meanings,kun_readings,on_readings,name_readings,kanji_classification,JLPT) VALUES (?,?,?,?,?,?,?,?,?,?)"
     cur = conn.cursor()
-    cur.execute(sql,(id,symbol,strokes,grade,kanji_classification,JLPT,radical,joyo_reading,non_joyo_reading,meaning,on_within_joyo,kun_within_joyo))
+    cur.execute(sql,(id,symbol,grade,strokes,meanings,kun_readings,on_readings,name_readings,kanji_classification,JLPT))
     conn.commit()
